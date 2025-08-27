@@ -1,0 +1,9 @@
+1af1002c81660078a899eb74db86b014 *DESCRIPTION
+2cd4b955f0a3e941eec3a71be569de69 *NAMESPACE
+61f2cbd202f4dbeeb13976cc6b8f70fc *R/NMAforest.R
+8b7983dbe58ac5b41a0932cc14b93666 *R/example_data.R
+fff73c5727ff9005aff2b1e1b1db2a0f *README.md
+cc38483967e8d974db4b4a25a3fb0d51 *data/example_data.rda
+aae42297fa26af256bd4d06a3d3499e0 *inst/extdata/example_data.csv
+08a58acd5bcb2bb3250b3224e8bbd13f *man/NMAforest.Rd
+3d4fc354bdf57c4a637ed34be015ba8c *man/example_data.Rd

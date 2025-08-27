@@ -1,0 +1,30 @@
+study,id,t,r,n,rob
+Kasemsuwan 1997,1,y,3,19,2
+Kasemsuwan 1997,1,x,14,16,2
+van Hasselt 2002,2,y,32,79,2
+van Hasselt 2002,2,x,66,83,2
+van Hasselt 2002,2,v,77,91,2
+van Hasselt 1997,3,y,7,14,3
+van Hasselt 1997,3,u,24,40,3
+van Hasselt 1997,3,v,34,39,3
+Kaygusuz 2002,4,y,10,20,2
+Kaygusuz 2002,4,u,10,20,2
+Lorente 1995,5,y,8,159,2
+Lorente 1995,5,u,9,149,2
+Tutkun 1995,6,y,3,24,2
+Tutkun 1995,6,u,14,20,2
+VH 1998 daily,7,y,9,32,2
+VH 1998 daily,7,u,12,36,2
+VH 1998 weekly,8,y,16,39,2
+VH 1998 weekly,8,u,13,31,2
+Fradis 1997,9,y,10,19,1
+Fradis 1997,9,u,8,18,1
+Fradis 1997,9,v,13,17,1
+Clayton 1990,10,u,19,60,3
+Clayton 1990,10,v,14,42,3
+Browning 1983a,11,u,15,18,2
+Browning 1983a,11,v,13,20,2
+Jaya 2003,12,y,6,21,1
+Jaya 2003,12,v,6,19,1
+Macfadyen 2005,13,y,66,196,1
+Macfadyen 2005,13,v,108,198,1
