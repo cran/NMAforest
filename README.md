@@ -32,8 +32,8 @@ The following columns are required (either with these names or specified via fun
 |  `n`        | All analyses        | Sample size in each arm                                      | numeric               |
 |  `mean`, `sd` | Continuous outcomes | Mean and standard deviation (used instead of `event`)        | numeric               |
 |  `study`    | All analyses        | Study label or grouping variable                             | character or numeric  |
-|  `id`       | Optional            | Unique numeric study identifier (auto-generated if missing)  | integer               |
+|  `study_id`       | Optional            | Unique numeric study identifier (auto-generated if missing)  | integer               |
 
 ##
-**Note:** We recommend that users include an explicit `id` column where each value uniquely corresponds to a study label in the `study` column.  
-If the `id` column is not present in the dataset, the function will automatically generate one and return the updated data frame with this column added.
+**Note:** We recommend that users include an explicit `study_id` column where each value uniquely corresponds to a study label in the `study` column.  
+If the `study_id` column is not present in the dataset, the function will automatically generate one and return the updated data frame with this column added.

@@ -16,7 +16,7 @@ NMAforest(
   N = "n",
   mean = "y",
   sd = "sd",
-  id = "id",
+  study_id = "study_id",
   study_path = TRUE
 )
 }
@@ -31,7 +31,7 @@ NMAforest(
 
 \item{comparison}{A Vector of two treatments to compare.}
 
-\item{study}{Column name identifying the study ID or label.}
+\item{study}{Column name identifying the study label.}
 
 \item{treat}{Column name for treatment assignment.}
 
@@ -43,7 +43,7 @@ NMAforest(
 
 \item{sd}{Column name for standard deviations (for continuous outcomes).}
 
-\item{id}{Column name used to uniquely identify each study arm (default = "id"). If the column is not present, one will be added.}
+\item{study_id}{Column name used to uniquely identify each study arm (default = "study_id"). If the column is not present in the original dataset, the updated data frame will be returned with this column added..}
 
 \item{study_path}{Logical. TRUE to include study combination contributions, FALSE to exclude.}
 }
@@ -51,9 +51,16 @@ NMAforest(
 A list containing:
 \describe{
   \item{plot}{A ggplot object of the forest plot.}
-  \item{effects}{A data.frame with all effect sizes, confidence intervals, and weights.}
-  \item{proportions}{A data.frame with proportion values.}
-  \item{df_updated}{The input data frame with a unique \code{id} column added if not already present.}
+  \item{output}{A data frame summarizing the results for the specified treatment
+  comparison, including study-level and overall estimates. Columns contain the
+  effect sizes with their 95% confidence intervals, standard errors, study
+  weights, and contribution proportions, along with labels indicating whether
+  the row corresponds to a study, direct effect, indirect effect, or the
+  overall NMA estimate.}
+  \item{updated_df}{The input data frame after preprocessing, with a unique
+  study identifier column (from the argument \code{study_id}) added when not
+  already present. This guarantees consistent referencing of studies in both
+  the analysis and the output.}
 }
 }
 \description{
@@ -81,7 +88,7 @@ NMAforest(
   treat = "t",
   event = "r",
   N = "n",
-  id = "id",
+  study_id = "id",
   study_path = TRUE
 )
 }
