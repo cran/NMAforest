@@ -9,25 +9,30 @@
 #' This package includes an implementation of `comparisonStreams()` originally
 #' developed by Papakonstantinou et al. (2018) and released with the paper's supplementary material.
 #'
-#' @param data A data frame containing the input data.
-#' @param sm A Character string specifying the summary measure to use (e.g., "RR" for risk ratio, "OR" for odds ratio, "MD" for mean difference, "SMD" for standardized mean difference, etc.).
+#' @param data A data frame in long format with required variables
+#'   \code{study} (study identifier) and \code{t} (treatment label), plus outcome
+#'   columns: for binary outcomes, \code{r} (events) and \code{N} (sample size);
+#'   for continuous outcomes, \code{y} (mean), \code{sd} (standard deviation), and
+#'   \code{N} (sample size). Column names are configurable via \code{study},
+#'   \code{treat}, \code{event}, \code{N}, \code{mean}, and \code{sd}.
+#' @param sm A Character string specifying the summary measure to use (e.g., "OR" for odds ratio, "RR" for risk ratio, "RD" for risk difference, "MD" for mean difference, "SMD" for standardized mean difference, etc.).
 #' @param reference Specify the reference treatment for comparisons.
 #' @param model Choose "random" or "fixed" effect model.
-#' @param comparison A Vector of two treatments to compare.
+#' @param comparison A vector of two treatments to compare.
 #' @param study Column name identifying the study label.
 #' @param treat Column name for treatment assignment.
 #' @param event Column name for event counts (for binary outcomes).
-#' @param N Column name for total sample size (for binary outcomes).
+#' @param N Column name for total sample size (for binary and continuous outcomes).
 #' @param mean Column name for mean values (for continuous outcomes).
 #' @param sd Column name for standard deviations (for continuous outcomes).
-#' @param study_id Column name used to uniquely identify each study arm (default = "study_id"). If the column is not present in the original dataset, the updated data frame will be returned with this column added..
+#' @param study_id Column name used to uniquely identify each study arm (default = "study_id"). If the column is not present in the original dataset, the updated data frame will be returned with this column added.
 #' @param study_path Logical. TRUE to include study combination contributions, FALSE to exclude.
 #' @return A list containing:
 #' \describe{
 #'   \item{plot}{A ggplot object of the forest plot.}
 #'   \item{output}{A data frame summarizing the results for the specified treatment
 #'   comparison, including study-level and overall estimates. Columns contain the
-#'   effect sizes with their 95% confidence intervals, standard errors, study
+#'   effect sizes with their 95\% confidence intervals, standard errors, study
 #'   weights, and contribution proportions, along with labels indicating whether
 #'   the row corresponds to a study, direct effect, indirect effect, or the
 #'   overall NMA estimate.}
@@ -100,10 +105,10 @@
 
 
 NMAforest <- function(data,
-                      sm = "OR",
-                      reference = "x",
+                      sm,
+                      reference,
                       model = "random",
-                      comparison = c("x", "y"),
+                      comparison,
                       study = "study",
                       treat = "t",
                       event = "r",
@@ -119,7 +124,7 @@ NMAforest <- function(data,
   # Generate id column if missing
   
   id_variants <- tolower(names(df))
-  has_id <- any(id_variants %in% c("id", "study_id", "studyid"))
+  has_id <- any(id_variants %in% c("id", "study_id", "studyid", "row_id", "row id", "rowid"))
   
   if (!has_id){
     study_map <- data.frame(
@@ -131,7 +136,7 @@ NMAforest <- function(data,
   }
   
   # Generate pairwise format
-  if (sm %in% c("OR", "RR")) {
+  if (sm %in% c("OR", "RR", "RD", "ASD")) {
     data_long <- eval(substitute(
       pairwise(
         treat = TREAT,
@@ -139,7 +144,7 @@ NMAforest <- function(data,
         n = N_,
         studlab = STUDY,
         data = df,
-        sm = "OR"
+        sm = sm
       ),
       list(
         TREAT = as.name(treat),
@@ -148,7 +153,7 @@ NMAforest <- function(data,
         STUDY = as.name(study)
       )
     ))
-  } else if (sm %in% c("MD", "SMD")) {
+  } else if (sm %in% c("MD", "SMD", "ROM")) {
     data_long <- eval(substitute(
       pairwise(
         treat = TREAT,
@@ -970,7 +975,7 @@ NMAforest <- function(data,
     geom_vline(xintercept = vline_end_direct, linetype = "dashed", color = "black") +
     geom_vline(xintercept = vline_end_all, linetype = "dashed", color = "black") +
     
-    scale_color_manual(values = c("Direct" = "blue", "Blank" = "deeppink", "Indirect" = "darkorange", "Overall" = "#009E73")) +
+    scale_color_manual(values = c("Direct" = "blue", "Indirect" = "darkorange", "Overall" = "#009E73")) +
     scale_y_continuous(breaks = plot_data$OrderIndex, labels = plot_data$Label) +
     expand_limits(y = top_y) +
     scale_x_continuous(

@@ -6,10 +6,10 @@
 \usage{
 NMAforest(
   data,
-  sm = "OR",
-  reference = "x",
+  sm,
+  reference,
   model = "random",
-  comparison = c("x", "y"),
+  comparison,
   study = "study",
   treat = "t",
   event = "r",
@@ -21,15 +21,20 @@ NMAforest(
 )
 }
 \arguments{
-\item{data}{A data frame containing the input data.}
+\item{data}{A data frame in long format with required variables
+\code{study} (study identifier) and \code{t} (treatment label), plus outcome
+columns: for binary outcomes, \code{r} (events) and \code{N} (sample size);
+for continuous outcomes, \code{y} (mean), \code{sd} (standard deviation), and
+\code{N} (sample size). Column names are configurable via \code{study},
+\code{treat}, \code{event}, \code{N}, \code{mean}, and \code{sd}.}
 
-\item{sm}{A Character string specifying the summary measure to use (e.g., "RR" for risk ratio, "OR" for odds ratio, "MD" for mean difference, "SMD" for standardized mean difference, etc.).}
+\item{sm}{A Character string specifying the summary measure to use (e.g., "OR" for odds ratio, "RR" for risk ratio, "RD" for risk difference, "MD" for mean difference, "SMD" for standardized mean difference, etc.).}
 
 \item{reference}{Specify the reference treatment for comparisons.}
 
 \item{model}{Choose "random" or "fixed" effect model.}
 
-\item{comparison}{A Vector of two treatments to compare.}
+\item{comparison}{A vector of two treatments to compare.}
 
 \item{study}{Column name identifying the study label.}
 
@@ -37,13 +42,13 @@ NMAforest(
 
 \item{event}{Column name for event counts (for binary outcomes).}
 
-\item{N}{Column name for total sample size (for binary outcomes).}
+\item{N}{Column name for total sample size (for binary and continuous outcomes).}
 
 \item{mean}{Column name for mean values (for continuous outcomes).}
 
 \item{sd}{Column name for standard deviations (for continuous outcomes).}
 
-\item{study_id}{Column name used to uniquely identify each study arm (default = "study_id"). If the column is not present in the original dataset, the updated data frame will be returned with this column added..}
+\item{study_id}{Column name used to uniquely identify each study arm (default = "study_id"). If the column is not present in the original dataset, the updated data frame will be returned with this column added.}
 
 \item{study_path}{Logical. TRUE to include study combination contributions, FALSE to exclude.}
 }
@@ -53,7 +58,7 @@ A list containing:
   \item{plot}{A ggplot object of the forest plot.}
   \item{output}{A data frame summarizing the results for the specified treatment
   comparison, including study-level and overall estimates. Columns contain the
-  effect sizes with their 95% confidence intervals, standard errors, study
+  effect sizes with their 95\% confidence intervals, standard errors, study
   weights, and contribution proportions, along with labels indicating whether
   the row corresponds to a study, direct effect, indirect effect, or the
   overall NMA estimate.}

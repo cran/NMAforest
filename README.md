@@ -1,4 +1,3 @@
-
 # NMAforest
 
 <!-- badges: start -->
@@ -30,7 +29,7 @@ The following columns are required (either with these names or specified via fun
 |  `treat`    | All analyses        | Treatment label for each arm                                 | character or factor   |
 |  `event`    | Binary outcomes     | Number of events in the arm                                  | numeric               |
 |  `n`        | All analyses        | Sample size in each arm                                      | numeric               |
-|  `mean`, `sd` | Continuous outcomes | Mean and standard deviation (used instead of `event`)        | numeric               |
+|  `mean`, `sd` | Continuous outcomes | Mean and standard deviation                                | numeric               |
 |  `study`    | All analyses        | Study label or grouping variable                             | character or numeric  |
 |  `study_id`       | Optional            | Unique numeric study identifier (auto-generated if missing)  | integer               |
 
